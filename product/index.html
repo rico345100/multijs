@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Multi.js Example</title>
+</head>
+<body>
+    <h1>Multi.js Example</h1>
+    <p>Cross browsing, Easy JavaScript Multithread Library</p>
+    <p>If your browser support Multithread features, it works as seperate new thread.</p>
+    <p>Else, it is working with some timer tricks.</p>
+    <br />
+    <label id="support">Wait...</label><br />
+    <label id="label">Value: None</label><br />
+    <label id="state">State: None</label><br />
+    <hr />
+    <input type="text" id="text" placeholder="Data to send" /><br />
+    <button id="start">Start Thread</button>
+    <button id="stop">Stop Thread</button>
+    <button id="execute">Execute</button>
+    <br />
+    <hr />
+    <pre>
+var myThread = new Multi.Thread(function () {
+    return postData;
+});
+
+myThread.start();
+myThread.execute(text.value, function (error, data) {
+    if (error) {
+        console.error('Error!');
+        return;
+    }
+    console.log(data);
+});
+    </pre>
+    <script src="multi.js"></script>
+    <script>
+        var support = document.getElementById('support');
+        var label = document.getElementById('label');
+        var state = document.getElementById('state');
+        var text = document.getElementById('text');
+        var start = document.getElementById('start');
+        var stop = document.getElementById('stop');
+        var post = document.getElementById('post');
+
+        support.innerText = 'Support Multithread: ' + Multi.isSupportWorker();
+
+        var myThread = new Multi.Thread(function () {
+            return postData;
+        });
+      
+
+        //Start Thread
+        start.addEventListener('click', function () {
+            myThread.start();
+            state.innerText = "State: Active";
+        });
+        //Terminate Thread
+        stop.addEventListener('click', function () {
+            myThread.terminate();
+            state.innerText = 'State: Deactive';
+        });
+        //Execute thread
+        execute.addEventListener('click', function () {
+            myThread.execute(text.value, function (error, data) {
+                if (error) {
+                    label.innerText = 'Value: Error!';
+                    return;
+                }
+
+                label.innerText = 'Value: Thread sent ' + data;
+                console.log(data);
+            });
+        });
+    </script>
+</body>
+</html>
