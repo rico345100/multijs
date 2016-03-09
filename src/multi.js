@@ -37,6 +37,8 @@
     //Post message
     this.Thread.prototype.execute = function (data, callback) {
         if (!this._worker) throw new Error('Thread is not activated.');
+		
+		data = data || undefined;
 
         var self = this;
         this._state = states.work;

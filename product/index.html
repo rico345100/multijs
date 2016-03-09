@@ -29,10 +29,10 @@ var myThread = new Multi.Thread(function () {
 myThread.start();
 myThread.execute(text.value, function (error, data) {
     if (error) {
-        console.error('Error!');
+        alert('Error!');
         return;
     }
-    console.log(data);
+    alertlog(data);
 });
     </pre>
     <script src="multi.js"></script>
@@ -50,30 +50,53 @@ myThread.execute(text.value, function (error, data) {
         var myThread = new Multi.Thread(function () {
             return postData;
         });
-      
-
+		
+		
+		var event = { on: null, off: null };
+		
+		if(document.attachEvent) {
+			event.on = function(target, type, fn) {
+				target.attachEvent("on" + type, fn);
+			};
+			event.off = function(target, type, fn) {
+				target.detachEvent("on" + type, fn);
+			};
+		}
+		else {
+			event.on = function(target, type, fn) {
+				target.addEventListener(type, fn);
+			};
+			event.off = function(target, type, fn) {
+				target.removeEventListener(type, fn);
+			};
+		}
+		
+		
         //Start Thread
-        start.addEventListener('click', function () {
-            myThread.start();
+		event.on(start, 'click', function() {
+			myThread.start();
             state.innerText = "State: Active";
-        });
+		});
+		
         //Terminate Thread
-        stop.addEventListener('click', function () {
-            myThread.terminate();
+		event.on(stop, 'click', function() {
+			myThread.terminate();
             state.innerText = 'State: Deactive';
-        });
+		});
+		
         //Execute thread
-        execute.addEventListener('click', function () {
-            myThread.execute(text.value, function (error, data) {
+		event.on(execute, 'click', function() {
+			myThread.execute(text.value, function (error, data) {
                 if (error) {
                     label.innerText = 'Value: Error!';
                     return;
                 }
 
                 label.innerText = 'Value: Thread sent ' + data;
-                console.log(data);
+                if(typeof console === 'undefined') alert(data);
             });
-        });
+		});
+		
     </script>
 </body>
 </html>
