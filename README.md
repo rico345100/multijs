@@ -5,6 +5,9 @@ The light weight, easy use, cross-browsing multithread JavaScript library.
 ## Q. How does it work?
 A. If the browser supports "Web Worker API and Blob", use Web worker. But if not, use the timer instead. Yes, trully, it is not "cross-browsing multithread", but you can use any browser.
 
+## Q. Support?
+A. IE5.5-11 and all major browsers supported (highly recommend to use with X-browsing event handlers)
+
 ## Q. How to use it?
 A. Read the "how to use" below.
 
